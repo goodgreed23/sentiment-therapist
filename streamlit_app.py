@@ -28,6 +28,8 @@ from utils.eval_qs import TA_0s, TA_100s
 from utils.utils import response_generator
 from datetime import datetime
 
+import shutil
+
 st.set_page_config(page_title="Therapist Chatbot Evaluation", page_icon=None, layout="centered", initial_sidebar_state="expanded", menu_items=None)
 
 # CONFIGS
@@ -337,16 +339,25 @@ else:
         # file_name = "Unadapted_P{PID}.csv".format(PID=user_PID)
         file_name = "{style}_P{PID}.csv".format(style=target_styles[style_id], PID=user_PID)
         # st.write("file name is "+file_name)
-
+        
+        created_files_path = "conv_history_P{PID}".format(PID=user_PID)
+        if not os.path.exists(created_files_path):
+            os.makedirs(created_files_path)
+                
         end_time_row = pd.DataFrame([{"role": "End Time", "content": datetime.now()}])
         duration_row = pd.DataFrame([{"role": "Duration", "content": save_duration()}])
         # Append the time rows
         chat_history_df = pd.concat([chat_history_df, start_time_row, end_time_row, duration_row], ignore_index=True)
         
-        chat_history_df.to_csv(file_name, index=False)
+        # chat_history_df.to_csv(file_name, index=False)
+        chat_history_df.to_csv(os.path.join(created_files_path,file_name), index=False)
+        
         
         blob = bucket.blob(file_name)
-        blob.upload_from_filename(file_name)
+        blob.upload_from_filename(os.path.join(created_files_path,file_name))
+        # blob.upload_from_filename(file_name)
+        
+        shutil.rmtree(created_files_path)
 
         if st.button("Save Conversation & Start Evaluation"):
             st.write("**Chat history is saved successfully. You can begin filling out the evaluation questions now.**")
