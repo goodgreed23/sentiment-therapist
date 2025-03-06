@@ -360,6 +360,7 @@ else:
         shutil.rmtree(created_files_path)
 
         if st.button("Save Conversation & Start Evaluation"):
+            st.cache_data.clear()
             st.write("**Chat history is saved successfully. You can begin filling out the evaluation questions now.**")
 
         # csv = chat_history_df.to_csv()
