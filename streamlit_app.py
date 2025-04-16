@@ -66,7 +66,7 @@ credentials = ServiceAccountCredentials.from_json_keyfile_dict(
 #     credentials_dict
 # )
 client = storage.Client(credentials=credentials, project='digital-sprite-450023-c5')
-bucket = client.get_bucket('coco-streamlit-bucket')
+bucket = client.get_bucket('coco-main')
 file_name = 'NA'
 
 def save_duration():
