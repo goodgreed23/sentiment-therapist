@@ -348,8 +348,8 @@ else:
         if not os.path.exists(created_files_path):
             os.makedirs(created_files_path)
 
-        file_name = "Unadapted_P{PID}.csv".format(PID=user_PID)
-        # file_name = "{style}_P{PID}.csv".format(style=target_styles[style_id], PID=user_PID)
+        # file_name = "Unadapted_P{PID}.csv".format(PID=user_PID)
+        file_name = "{style}_P{PID}.csv".format(style=target_styles[style_id], PID=user_PID)
         # st.write("file name is "+file_name)
 
         # chat_history_df.to_csv(file_name, index=False)
